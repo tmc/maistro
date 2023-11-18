@@ -86,6 +86,9 @@ agent = initialize_agent(
     verbose=True,
 )
 
+goals = call_gpt_vision()
+goals = goals.split("\n")
+print(call_gpt_vision())
 
 MAESTRO_URL = "http://localhost:9999/interact"
 # pass the image to GPT to generate a list of example features to test?
@@ -96,9 +99,8 @@ You are an AI Agent whose job is to use the search bar to enumerate all possible
 
 Here are the high-level steps:
 1. Go to {MAESTRO_URL}
-2. Given the left side screenshot, create high level goals to test for
-3. Input the high level goals into the search bar starting with typing in " "
-4. Print the output on screen
+2. Input the high level goal: {goals[0]} into the search bar starting with typing in " "
+3. Print the output on screen
 """
 
 PROMPT2 = f"""
