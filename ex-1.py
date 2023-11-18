@@ -33,12 +33,13 @@ def take_ios_simulator_screenshot(save_path):
     return base64_encoded_data
 
 
-CANNED_RESULT="""
+CANNED_RESULT = """
 Save the location of Union Square, San Francisco to a list of favorite places.
 Share the directions to Union Square, San Francisco with a contact.
 Save the location of Union Square, San Francisco to a list of favorite places.
 Share the directions to Union Square, San Francisco with a contact.
 """
+
 
 def call_gpt_vision():
     return CANNED_RESULT
@@ -48,7 +49,7 @@ def call_gpt_vision():
             "content": [
                 {
                     "type": "text",
-                    "text": "You are a GPT4 Vision assitant bot - you will be given a screenshot of the iOS simulator, please generate 2 high level tasks to test for, write each task on a newline",
+                    "text": "You are a GPT4 Vision assitant bot - you will be given a screenshot of the iOS simulator, please generate a list of actions to perform, write each action on a newline",
                 },
             ],
         },
@@ -58,9 +59,9 @@ def call_gpt_vision():
                 {
                     "type": "text",
                     # "text": "According to the screenshot, what is the next step so that I can listen to the same song at the same time with a friend?",
-                    "text": """Give me 2 high level tasks to test for. Write them similar to below:
-                    Find the day Sam Altman was removed from OpenAI.
-                    Find how many first link clicks will get to "Philosophy" from the page "OpenAI"
+                    "text": """Give me some actions to perform based on the scresnshot. Write them similar to below:
+                    Write text "Union Square" in search bar
+                    Click on the "save" button
                     """,
                 },
                 {
@@ -113,7 +114,7 @@ You are an AI Agent whose job is to use the search bar to enumerate all possible
 
 Here are the high-level steps:
 1. Go to {MAESTRO_URL}
-2. Input the high level goal: {goals[0]} into the search bar starting with typing in " "
+2. Input text in the text box by starting with a " " and then append {goals[0]} to it
 3. Print the output on screen
 """
 
@@ -128,10 +129,11 @@ Here are the high-level steps:
 2. For each high level goal, develop a list of commands to build up to achieve the goal.
 """
 
-print(PROMPT2)
+PROMPT = PROMPT1
+print(PROMPT)
 
 response = agent(
     inputs={
-        "input": PROMPT2,
+        "input": PROMPT,
     }
 )
