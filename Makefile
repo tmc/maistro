@@ -15,7 +15,6 @@ run-sample-flow: download-samples ## Run sample flow
 	@./scripts/run-sample-flow.sh
 
 
-.PHONY: venv
 venv: requirements.in ## Create virtual environment
 	@python3 -m venv venv
 	./venv/bin/pip install wheel pip-tools

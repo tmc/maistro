@@ -4,159 +4,315 @@
 #
 #    pip-compile requirements.in
 #
+-e file:///Users/tmc/go/src/github.com/tmc/maistro/third_party/api/sdks/multion-py
+    # via -r requirements.in
 aiohttp==3.9.0
     # via
     #   langchain
     #   openai
 aiosignal==1.3.1
     # via aiohttp
+aiosqlite==0.19.0
+    # via prefect
+alembic==1.12.1
+    # via prefect
 annotated-types==0.6.0
     # via pydantic
 anyio==3.7.1
-    # via langchain
-appnope==0.1.3
-    # via ipython
-asttokens==2.4.1
-    # via stack-data
+    # via
+    #   httpx
+    #   langchain
+    #   prefect
+    #   starlette
+apprise==1.6.0
+    # via prefect
+asgi-lifespan==2.1.0
+    # via prefect
+async-timeout==4.0.3
+    # via asyncpg
+asyncpg==0.29.0
+    # via prefect
 attrs==23.1.0
-    # via aiohttp
+    # via
+    #   aiohttp
+    #   jsonschema
+    #   referencing
+cachetools==5.3.2
+    # via google-auth
 certifi==2023.11.17
-    # via requests
+    # via
+    #   apprise
+    #   httpcore
+    #   httpx
+    #   kubernetes
+    #   requests
 cffi==1.16.0
     # via cryptography
 charset-normalizer==3.3.2
     # via requests
-cognitojwt==1.4.1
-    # via multion
-cryptography==41.0.5
+click==8.1.7
     # via
-    #   multion
-    #   python-jose
+    #   apprise
+    #   prefect
+    #   typer
+    #   uvicorn
+cloudpickle==3.0.0
+    # via prefect
+colorama==0.4.6
+    # via griffe
+coolname==2.2.0
+    # via prefect
+croniter==2.0.1
+    # via prefect
+cryptography==41.0.5
+    # via prefect
 dataclasses-json==0.6.2
     # via langchain
-decorator==5.1.1
-    # via ipython
-ecdsa==0.18.0
-    # via python-jose
-executing==2.0.1
-    # via stack-data
+dateparser==1.2.0
+    # via prefect
+dnspython==2.4.2
+    # via email-validator
+docker==6.1.3
+    # via prefect
+email-validator==2.1.0.post1
+    # via pydantic
 frozenlist==1.4.0
     # via
     #   aiohttp
     #   aiosignal
+fsspec==2023.10.0
+    # via prefect
+google-auth==2.23.4
+    # via kubernetes
+graphviz==0.20.1
+    # via prefect
+greenlet==3.0.1
+    # via sqlalchemy
+griffe==0.38.0
+    # via prefect
+h11==0.14.0
+    # via
+    #   httpcore
+    #   uvicorn
+h2==4.1.0
+    # via httpx
+hpack==4.0.0
+    # via h2
+httpcore==1.0.2
+    # via
+    #   httpx
+    #   prefect
+httpx[http2]==0.25.1
+    # via
+    #   httpx
+    #   prefect
+hyperframe==6.0.1
+    # via h2
 idna==3.4
     # via
     #   anyio
+    #   email-validator
+    #   httpx
     #   requests
     #   yarl
-ipython==8.17.2
-    # via multion
-jedi==0.19.1
-    # via ipython
+jinja2==3.1.2
+    # via prefect
 jsonpatch==1.33
-    # via langchain
+    # via
+    #   langchain
+    #   prefect
 jsonpointer==2.4
     # via jsonpatch
+jsonschema==4.20.0
+    # via prefect
+jsonschema-specifications==2023.11.1
+    # via jsonschema
+kubernetes==27.2.0
+    # via prefect
 langchain==0.0.337
     # via -r requirements.in
 langsmith==0.0.65
     # via langchain
+mako==1.3.0
+    # via alembic
+markdown==3.5.1
+    # via apprise
+markdown-it-py==3.0.0
+    # via rich
+markupsafe==2.1.3
+    # via
+    #   jinja2
+    #   mako
 marshmallow==3.20.1
     # via dataclasses-json
-matplotlib-inline==0.1.6
-    # via ipython
+mdurl==0.1.2
+    # via markdown-it-py
 multidict==6.0.4
     # via
     #   aiohttp
     #   yarl
-multion==0.2.18
-    # via -r requirements.in
 mypy-extensions==1.0.0
     # via typing-inspect
 numpy==1.26.2
     # via langchain
 oauthlib==3.2.2
-    # via requests-oauthlib
+    # via
+    #   kubernetes
+    #   requests-oauthlib
 openai==0.27.10
-    # via multion
+    # via -r requirements.in
+orjson==3.9.10
+    # via prefect
 packaging==23.2
     # via
+    #   docker
     #   marshmallow
+    #   prefect
     #   pytesseract
-parso==0.8.3
-    # via jedi
-pexpect==4.8.0
-    # via ipython
+pathspec==0.11.2
+    # via prefect
+pendulum==2.1.2
+    # via prefect
 pillow==10.1.0
     # via
     #   multion
     #   pytesseract
-prompt-toolkit==3.0.41
-    # via ipython
-ptyprocess==0.7.0
-    # via pexpect
-pure-eval==0.2.2
-    # via stack-data
+prefect==2.14.5
+    # via -r requirements.in
 pyasn1==0.5.0
     # via
-    #   python-jose
+    #   pyasn1-modules
     #   rsa
+pyasn1-modules==0.3.0
+    # via google-auth
 pycparser==2.21
     # via cffi
-pydantic==2.5.1
+pydantic[email]==2.5.1
     # via
     #   langchain
     #   langsmith
+    #   prefect
 pydantic-core==2.14.3
     # via pydantic
 pygments==2.17.0
-    # via ipython
+    # via rich
 pytesseract==0.3.10
     # via multion
-python-jose[cryptography]==3.3.0
-    # via cognitojwt
+python-dateutil==2.8.2
+    # via
+    #   croniter
+    #   dateparser
+    #   kubernetes
+    #   pendulum
+    #   prefect
+python-dotenv==1.0.0
+    # via -r requirements.in
+python-slugify==8.0.1
+    # via prefect
+pytz==2023.3.post1
+    # via
+    #   croniter
+    #   dateparser
+    #   prefect
+pytzdata==2020.1
+    # via pendulum
 pyyaml==6.0.1
-    # via langchain
+    # via
+    #   apprise
+    #   kubernetes
+    #   langchain
+    #   prefect
+readchar==4.0.5
+    # via prefect
+referencing==0.31.0
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
+regex==2023.10.3
+    # via dateparser
 requests==2.31.0
     # via
+    #   apprise
+    #   docker
+    #   kubernetes
     #   langchain
     #   langsmith
     #   multion
     #   openai
     #   requests-oauthlib
 requests-oauthlib==1.3.1
-    # via multion
+    # via
+    #   apprise
+    #   kubernetes
+rich==13.7.0
+    # via prefect
+rpds-py==0.13.0
+    # via
+    #   jsonschema
+    #   referencing
 rsa==4.9
-    # via python-jose
+    # via google-auth
+ruamel-yaml==0.18.5
+    # via prefect
+ruamel-yaml-clib==0.2.8
+    # via ruamel-yaml
 six==1.16.0
     # via
-    #   asttokens
-    #   ecdsa
+    #   kubernetes
+    #   python-dateutil
 sniffio==1.3.0
-    # via anyio
-sqlalchemy==2.0.23
-    # via langchain
-stack-data==0.6.3
-    # via ipython
+    # via
+    #   anyio
+    #   asgi-lifespan
+    #   httpx
+    #   prefect
+sqlalchemy[asyncio]==2.0.23
+    # via
+    #   alembic
+    #   langchain
+    #   prefect
+starlette==0.32.0.post1
+    # via prefect
 tenacity==8.2.3
     # via langchain
+text-unidecode==1.3
+    # via python-slugify
+toml==0.10.2
+    # via prefect
 tqdm==4.66.1
     # via openai
-traitlets==5.13.0
-    # via
-    #   ipython
-    #   matplotlib-inline
+typer==0.9.0
+    # via prefect
 typing-extensions==4.8.0
     # via
+    #   alembic
+    #   prefect
     #   pydantic
     #   pydantic-core
     #   sqlalchemy
+    #   typer
     #   typing-inspect
 typing-inspect==0.9.0
     # via dataclasses-json
+tzlocal==5.2
+    # via dateparser
+ujson==5.8.0
+    # via prefect
 urllib3==2.1.0
-    # via requests
-wcwidth==0.2.10
-    # via prompt-toolkit
+    # via
+    #   docker
+    #   kubernetes
+    #   requests
+uvicorn==0.24.0.post1
+    # via prefect
+websocket-client==1.6.4
+    # via
+    #   docker
+    #   kubernetes
+websockets==12.0
+    # via prefect
 yarl==1.9.2
     # via aiohttp
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
