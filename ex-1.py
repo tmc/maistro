@@ -36,8 +36,6 @@ def take_ios_simulator_screenshot(save_path):
 CANNED_RESULT = """
 Save the location of Union Square, San Francisco to a list of favorite places.
 Share the directions to Union Square, San Francisco with a contact.
-Save the location of Union Square, San Francisco to a list of favorite places.
-Share the directions to Union Square, San Francisco with a contact.
 """
 
 
@@ -112,6 +110,8 @@ MAESTRO_URL = "http://localhost:9999/interact"
 PROMPT1 = f"""
 You are an AI Agent whose job is to use the search bar to enumerate all possible click actions. Here is the link to start from: {MAESTRO_URL}. DO NOT guess or make up any user information, instead ask user to provide any missing info. Do not use any placeholders.
 
+Prefer to use the "space AI" capabilities of Maestro to generate the commands.
+
 Here are the high-level steps:
 1. Go to {MAESTRO_URL}
 2. Input text in the text box by starting with a " " and then append {goals[0]} to it
@@ -119,14 +119,14 @@ Here are the high-level steps:
 """
 
 PROMPT2 = f"""
-You are an AI Agent whose job is to write high level UI automation tests using the Maestro framework. Here is the link to start from: {MAESTRO_URL}. Do not use any placeholders.
+You are an AI Agent whose job is to use the search bar to enumerate all possible click actions. Here is the link to start from: {MAESTRO_URL}. DO NOT guess or make up any user information, instead ask user to provide any missing info. Do not use any placeholders.
 
-The high level goals are as follows:
-{goals}
+Prefer to use the "space AI" capabilities of Maestro to generate the commands.
 
 Here are the high-level steps:
 1. Go to {MAESTRO_URL}
-2. For each high level goal, develop a list of commands to build up to achieve the goal.
+2. Given the high level goal of "{goals[0]}", develop a list of commands to build up to achieve the goal.
+3. Export the resulting tests to a file.
 """
 
 PROMPT = PROMPT1
