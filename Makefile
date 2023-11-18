@@ -7,3 +7,10 @@ deps:
 .PHONY: download-samples
 download-samples: deps
 	@maestro download-samples
+
+.PHONY: run-sample-flow
+run-sample-flow:
+	cd ./samples
+	unzip sample.zip
+	xcrun simctl install Booted Wikipedia.app
+	maestro test ios-flow.yaml
