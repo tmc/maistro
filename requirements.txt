@@ -225,7 +225,9 @@ pygments==2.17.0
     #   ipython
     #   rich
 pytesseract==0.3.10
-    # via multion
+    # via
+    #   -r requirements.in
+    #   multion
 python-dateutil==2.8.2
     # via
     #   croniter

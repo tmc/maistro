@@ -1,5 +1,10 @@
 # This makefile contains the commands to build and run the project.
 
+
+.PHONY: run-demo
+run-demo: venv ## Run demo
+	./venv/bin/python3 agent-1.py
+
 .PHONY: deps
 deps: ## Install dependencies
 	@command -v maestro > /dev/null || (curl -Ls "https://get.maestro.mobile.dev" | bash)
@@ -13,7 +18,6 @@ download-samples: deps ## Download samples
 .PHONY: run-sample-flow
 run-sample-flow: download-samples ## Run sample flow
 	@./scripts/run-sample-flow.sh
-
 
 venv: requirements.in ## Create virtual environment
 	@python3 -m venv venv

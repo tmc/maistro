@@ -5,3 +5,4 @@ prefect
 python-dotenv
 -e ./third_party/api/sdks/multion-py
 ipython
+pytesseract
