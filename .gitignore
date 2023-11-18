@@ -1,1 +1,4 @@
 samples/
+venv/
+.DS_Store
+git st .

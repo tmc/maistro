@@ -6,7 +6,6 @@ deps: ## Install dependencies
 	@command -v xcrun > /dev/null || (xcode-select --install)
 	@xcrun simctl list > /dev/null || (sudo xcode-select -s /Applications/Xcode.app)
 
-
 .PHONY: download-samples
 download-samples: deps ## Download samples
 	@maestro download-samples
@@ -14,3 +13,12 @@ download-samples: deps ## Download samples
 .PHONY: run-sample-flow
 run-sample-flow: download-samples ## Run sample flow
 	@./scripts/run-sample-flow.sh
+
+
+.PHONY: venv
+venv: requirements.in ## Create virtual environment
+	@python3 -m venv venv
+	./venv/bin/pip install wheel pip-tools
+	./venv/bin/pip-compile requirements.in
+	./venv/bin/pip-sync
+
