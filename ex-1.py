@@ -33,10 +33,8 @@ def take_ios_simulator_screenshot(save_path):
     return base64_encoded_data
 
 
-CANNED_RESULT = """
-Save the location of Union Square, San Francisco to a list of favorite places.
-Share the directions to Union Square, San Francisco with a contact.
-"""
+CANNED_RESULT = """Save the location of Union Square, San Francisco to a list of favorite places.
+Share the directions to Union Square, San Francisco with a contact."""
 
 
 def call_gpt_vision():
@@ -110,26 +108,30 @@ MAESTRO_URL = "http://localhost:9999/interact"
 PROMPT1 = f"""
 You are an AI Agent whose job is to use the search bar to enumerate all possible click actions. Here is the link to start from: {MAESTRO_URL}. DO NOT guess or make up any user information, instead ask user to provide any missing info. Do not use any placeholders.
 
-Prefer to use the "space AI" capabilities of Maestro to generate the commands.
+You are given the high level goal of "{goals[0]}".
 
-Here are the high-level steps:
-1. Go to {MAESTRO_URL}
-2. Input text in the text box by starting with a " " and then append {goals[0]} to it
-3. Print the output on screen
+To accomplish a goal, you can use the "space AI" capabilities of Maestro to generate the commands.
+Here's how to use the "space AI":
+* Start with a space character, then entry the goal such as "X on Y Z", replace "Y" to a actionable button or link that makes sense to the current left side of the page. X is one of 
+["click", "type"], where Z can be an optional text that is needed to achieve the goal
+* Submit the prompt, wait for the results to come back, then press the submit button.
 """
 
 PROMPT2 = f"""
-You are an AI Agent whose job is to use the search bar to enumerate all possible click actions. Here is the link to start from: {MAESTRO_URL}. DO NOT guess or make up any user information, instead ask user to provide any missing info. Do not use any placeholders.
+You are an AI Agent with the objective to systematically explore and list all possible click actions using the search bar in the web-based tool. Begin at this URL: {MAESTRO_URL}. Remember, do not assume or fabricate any user data; always request the necessary information from the user directly. Avoid placeholders.
 
-Prefer to use the "space AI" capabilities of Maestro to generate the commands.
+You don't need to navigate to any other pages, everything you need is on the current page.
 
-Here are the high-level steps:
-1. Go to {MAESTRO_URL}
-2. Given the high level goal of "{goals[0]}", develop a list of commands to build up to achieve the goal.
-3. Export the resulting tests to a file.
+Your primary goal is to "{goals[0]}".
+
+To fulfill this goal, engage the AI-powered command function within Maestro to formulate the commands.
+
+* In the command bar, initiate with a space character, followed by detailing the goal in the format "X on Y Z". Replace "Y" with a clickable element (button or link) that corresponds to the context presented on the left side of the interface. "X" should be a command from the set ["click", "type"], while "Z" represents any additional text required to achieve the goal.
+* After submitting the goal statement, patiently await the response, and then execute the provided commands by pressing the submit button.
+* If the "space AI" misinterprets the instruction or fails to generate a viable command, refine your instruction by providing more context or specificity about the clickable elements available on the screen.
 """
 
-PROMPT = PROMPT1
+PROMPT = PROMPT2
 print(PROMPT)
 
 response = agent(
