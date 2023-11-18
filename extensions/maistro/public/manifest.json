@@ -4,7 +4,7 @@
   "description": "maistro - automating mobile app testing",
   "version": "1.0",
   "action": {
-    "default_popup": "main-popup.html",
+    "default_popup": "index.html",
     "default_icon": "logo.png"
   }
 }

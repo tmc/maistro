@@ -11,6 +11,7 @@
       "options": {
         "outputPath": "dist/maistro"
       },
+      "dependsOn": ["copy"],
       "configurations": {
         "development": {
           "mode": "development"
