@@ -7,3 +7,4 @@ ios_simulator*
 .env
 output
 *.cpython*
+last-screen.png
