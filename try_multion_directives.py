@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 import os
 import time
 
-# Load the .env file
+# Load the .env file BEFORE importing multion
 load_dotenv()
 import multion
 
