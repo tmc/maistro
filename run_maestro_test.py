@@ -1,3 +1,10 @@
+from lib.fs_helpers import (
+    get_script_cwd,
+    extract_path,
+    find_first_fext,
+    find_first_png,
+    find_first_log,
+)
 import os
 import re
 import subprocess
@@ -5,12 +12,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from lib.fs_helpers import (
-    get_script_cwd,
-    extract_path,
-    find_first_fext,
-    find_first_png
-)
 
 OUTPUT_BASE_DIR = get_script_cwd("../output")
 
@@ -42,7 +43,11 @@ def run_maestro_test(run_id, test_filename, host='localhost'):
     result_success = True if result.returncode == 0 else False
 
     if "No running emulator found" in stderr:
-        return {"success": False, "message": "No running emulator found"}
+        return {
+            "success": False,
+            "status": "NO_EMULATOR",
+            "message": "No running emulator found"
+        }
 
     if "Flow Failed" in stdout:
         default_debug_folder = extract_path(stdout)
@@ -54,13 +59,25 @@ def run_maestro_test(run_id, test_filename, host='localhost'):
                 capture_output=True,
             )
 
-            return {"success": False, "output_xml": output_file_path, "debug_folder": f"{debug_output_path}/latest"}
+            return {
+                "success": False,
+                "status": "TEST_FAILED",
+                "output_xml": output_file_path,
+                "debug_folder": f"{debug_output_path}/latest",
+                "screenshot": find_first_png(f"{debug_output_path}/latest"),
+                "error_log": find_first_log(f"{debug_output_path}/latest"),
+                "steps_json": find_first_json(f"{debug_output_path}/latest")
+            }
 
-    return {"success": result_success, "output_xml": output_file_path}
+    return {
+        "success": result_success,
+        "status": "TEST_SUCCEEDED",
+        "output_xml": output_file_path
+    }
 
 
 if __name__ == "__main__":
     # on windows the host is not localhost
     host = os.environ.get("MAESTRO_HOST", "localhost")
-    print(run_maestro_test("run-1", "example-launch-success.yaml", host=host))
+    # print(run_maestro_test("run-1", "example-launch-success.yaml", host=host))
     print(run_maestro_test("run-1", "example-fail.yaml", host=host))

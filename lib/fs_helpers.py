@@ -1,5 +1,6 @@
 import os
 import re
+import fnmatch
 
 
 def extract_path(text):
