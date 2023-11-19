@@ -4,6 +4,7 @@ from lib.fs_helpers import (
     find_first_fext,
     find_first_png,
     find_first_log,
+    find_first_json,
 )
 import os
 import re
