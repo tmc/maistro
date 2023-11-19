@@ -1,7 +1,11 @@
 import base64
 import re
+import shutil
+import os
 from openai import OpenAI
 from dotenv import load_dotenv
+from run_maestro_test import OUTPUT_BASE_DIR, run_maestro_test
+from lib.fs_helpers import get_script_cwd, get_now_string
 
 load_dotenv()
 client = OpenAI()
@@ -18,7 +22,7 @@ def extract_last_triple_backticks(text):
     return results[-1] if results else None
 
 
-def convert_instruction_to_maestro_yaml(instruction, context="", screenshot_path="./initial-screenshot.jpg"):
+def convert_instruction_to_maestro_yaml_fragment(instruction, context="", screenshot_path="./initial-screenshot.jpg"):
     BASE_PROMPT = """
     Maestro is a tool that allows you to create a YAML file that can be used to automate a task.
 
@@ -75,14 +79,7 @@ def convert_instruction_to_maestro_yaml(instruction, context="", screenshot_path
     - inputText: "Hello World"
     - openLink: https://example.com
     - pressKey: Enter
-    - swipe:
-        direction: LEFT
-    - swipe:
-        direction: RIGHT
-    - swipe:
-        direction: DOWN
-    - swipe:
-        direction: UP
+    - swipe
     - scrollUntilVisible:
         element:
           id: "viewId" # or any other selector
@@ -148,8 +145,66 @@ You are a GPT4 Vision assistant bot - you will be given a screenshot of a mobile
 
 
 if __name__ == "__main__":
+    host = os.environ.get("MAESTRO_HOST", "localhost")
     print("Converting instructions to YAML")
-    for task in INPUT_TASKS:
-        print(task)
-        result = convert_instruction_to_maestro_yaml(task)
-        print(result)
+    run_name = f"run-{get_now_string()}"
+    base_dir = os.path.join(OUTPUT_BASE_DIR, run_name)
+    os.makedirs(base_dir, exist_ok=True)
+
+    tpl_test_file_path = get_script_cwd(
+        "../maestro-tests/example-launch.yaml")
+    base_test_file_path = os.path.join(base_dir, "example-launch.yaml")
+    shutil.copy(tpl_test_file_path, base_test_file_path)
+
+    for index, task in enumerate(INPUT_TASKS):
+        test_file_name = f"example-launch-step-{index + 1}.yaml"
+        base_test_file_path = os.path.join(base_dir, test_file_name)
+
+        # Copy the template file or the last successful step file
+        if index == 0:
+            shutil.copy(tpl_test_file_path, base_test_file_path)
+        else:
+            shutil.copy(previous_step_file_path, base_test_file_path)
+
+        context = ""
+        screenshot_path = get_script_cwd(
+            "../maestro-tests/initial-screen.png")
+
+        for attempt in range(1, 4):  # Retry up to 3 times
+            with open(base_test_file_path, "a") as f:  # Open in append mode
+                result = convert_instruction_to_maestro_yaml_fragment(
+                    task, context, screenshot_path=screenshot_path)
+                new_instruction = result["output_yaml"]
+                # Append the new instruction
+                f.write("\n" + new_instruction)
+
+            test_result = run_maestro_test(run_name, test_file_name, host=host)
+
+            if test_result["status"] == "TEST_SUCCEEDED":
+                print(f"Test succeeded on attempt {attempt}")
+                previous_step_file_path = base_test_file_path  # Save for next step
+                break  # Break out of the retry loop if test succeeds
+            elif test_result["status"] == "TEST_FAILED":
+                print(f"Test failed on attempt {attempt}. Retrying...")
+                # Provide context of failure for the next attempt
+                # Read the contents of the current YAML file
+                with open(base_test_file_path, "r") as f:
+                    yaml_contents = f.read()
+
+                # Prepare context with YAML file contents
+                context = (f'Last iteration failed on step {task}.'
+                           f'Transcript of failed test yaml is {yaml_contents}. The last line generated was {new_instruction}, test was successful upto there. So revise that line'
+                           f'See screenshot of failure. Provide an alternate step instead.')
+                screenshot_path = test_result["screenshot"]
+
+                # Reset the test file for a fresh attempt
+                if index == 0:
+                    shutil.copy(tpl_test_file_path, base_test_file_path)
+                else:
+                    shutil.copy(previous_step_file_path, base_test_file_path)
+            else:
+                print(f"Test wasn't attempted on attempt {attempt} due to unexpected failure. Looping ...")
+
+        # Check if all attempts failed
+        if test_result["status"] != "TEST_SUCCEEDED":
+            print(f"All retry attempts failed for task {index + 1}")

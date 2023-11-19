@@ -1,6 +1,8 @@
 import os
 import re
 import fnmatch
+from datetime import datetime
+
 
 
 def extract_path(text):
@@ -48,4 +50,9 @@ def find_first_xml(directory):
 
 def find_first_json(directory):
     return find_first_fext(directory, "json")
+
+def get_now_string():
+    current_time = datetime.now()
+    formatted_time = current_time.strftime("%Y-%m-%d_%H%M%S")
+    return formatted_time
 

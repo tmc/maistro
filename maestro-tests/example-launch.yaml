@@ -2,4 +2,4 @@ appId: org.wikipedia
 ---
 - launchApp:
     clearState: true
-
+- tapOn: "skip"

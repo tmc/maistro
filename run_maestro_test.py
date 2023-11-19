@@ -20,9 +20,11 @@ def run_maestro_test(run_id, test_filename, host='localhost'):
     """
     Run a single test with the given host and port, and return the result.
     """
-    test_file_path = os.path.join(OUTPUT_BASE_DIR, run_id, test_filename)
-    output_file_path = os.path.join(OUTPUT_BASE_DIR, run_id, "output.xml")
-    debug_output_path = os.path.join(OUTPUT_BASE_DIR, run_id, "debug")
+    base_dir = os.path.join(OUTPUT_BASE_DIR, run_id)
+    os.makedirs(base_dir, exist_ok=True)
+    test_file_path = os.path.join(base_dir, test_filename)
+    output_file_path = os.path.join(base_dir, "output.xml")
+    debug_output_path = os.path.join(base_dir, "debug")
     cmd = f"maestro --host {host} test {test_file_path} --format junit --output={output_file_path} --debug-output={debug_output_path}"
     print(cmd)
     print(f"Running test {test_file_path}")
@@ -79,5 +81,5 @@ def run_maestro_test(run_id, test_filename, host='localhost'):
 if __name__ == "__main__":
     # on windows the host is not localhost
     host = os.environ.get("MAESTRO_HOST", "localhost")
-    # print(run_maestro_test("run-1", "example-launch-success.yaml", host=host))
-    print(run_maestro_test("run-1", "example-fail.yaml", host=host))
+    print(run_maestro_test("run-1", "example-launch-success.yaml", host=host))
+    # print(run_maestro_test("run-1", "example-fail.yaml", host=host))
