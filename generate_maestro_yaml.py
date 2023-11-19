@@ -13,6 +13,11 @@ client = OpenAI()
 INPUT_TASKS = [
     "Tap on the 'Search' tab at the bottom right corner",
     "Tap on the 'Search Wikipedia' bar at the top",
+    "Type 'Mission Dolores Park'",
+    "Tap on the 'Mission Dolores Park' item in the search results",
+    "Tap on the 'Save' icon, usually a star or bookmark symbol, to add to saved places",
+    "Tap on the 'Places' tab at the bottom to go to saved places",
+    "Verify that 'Mission Dolores Park' is listed under saved places",
 ]
 
 
