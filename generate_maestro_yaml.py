@@ -27,6 +27,13 @@ def extract_last_triple_backticks(text):
     return results[-1] if results else None
 
 
+
+def take_new_screenshot() -> str:
+    # take screenshot of ios emulator:
+    # xcrun simctl io booted screenshot --type=png last-screen.png
+    os.system("xcrun simctl io booted screenshot --type=png last-screen.png")
+    return get_script_cwd("last-screen.png")
+
 def convert_instruction_to_maestro_yaml_fragment(instruction, context="", screenshot_path="./initial-screenshot.jpg"):
     BASE_PROMPT = """
     Maestro is a tool that allows you to create a YAML file that can be used to automate a task.
@@ -188,6 +195,7 @@ if __name__ == "__main__":
             if test_result["status"] == "TEST_SUCCEEDED":
                 print(f"Test succeeded on attempt {attempt}")
                 previous_step_file_path = base_test_file_path  # Save for next step
+                screenshot_path = take_new_screenshot()  # Save for next step
                 break  # Break out of the retry loop if test succeeds
             elif test_result["status"] == "TEST_FAILED":
                 print(f"Test failed on attempt {attempt}. Retrying...")
