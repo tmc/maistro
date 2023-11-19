@@ -3,6 +3,6 @@ langchain
 openai
 prefect
 python-dotenv
--e ./third_party/api/sdks/multion-py
+multion
 ipython
 pytesseract
