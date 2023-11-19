@@ -110,10 +110,10 @@ You are an AI Agent whose job is to use the search bar to enumerate all possible
 
 You are given the high level goal of "{goals[0]}".
 
-To accomplish a goal, you can use the "space AI" capabilities of Maestro to generate the commands.
+To accomplish a goal, you can use the "space AI" capability to generate the commands.
+
 Here's how to use the "space AI":
-* Start with a space character, then entry the goal such as "X on Y Z", replace "Y" to a actionable button or link that makes sense to the current left side of the page. X is one of 
-["click", "type"], where Z can be an optional text that is needed to achieve the goal
+* Start by entering a single space character, then enter the goal such as "click on the Share button".
 * Submit the prompt, wait for the results to come back, then press the submit button.
 """
 
