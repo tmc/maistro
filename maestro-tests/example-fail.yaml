@@ -1,0 +1,9 @@
+appId: org.wikipedia
+---
+- launchApp:
+    clearState: true
+- tapOn: "search"
+- inputText: "Dolores Park"
+- tapOn: "Mission Dolores Park"
+- scroll
+

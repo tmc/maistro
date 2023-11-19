@@ -18,7 +18,7 @@ def extract_last_triple_backticks(text):
     return results[-1] if results else None
 
 
-def convert_instruction_to_maestro_yaml(instruction, context=""):
+def convert_instruction_to_maestro_yaml(instruction, context="", screenshot_path="./initial-screenshot.jpg"):
     BASE_PROMPT = """
     Maestro is a tool that allows you to create a YAML file that can be used to automate a task.
 
@@ -104,7 +104,7 @@ def convert_instruction_to_maestro_yaml(instruction, context=""):
     current_prompt = BASE_PROMPT.format(
         context=context, instruction=instruction)
 
-    image_data = open("./initial-screenshot.jpg", "rb").read()
+    image_data = open(screenshot_path, "rb").read()
     base64_encoded_data = base64.b64encode(image_data).decode("utf-8")
 
     messages = [
