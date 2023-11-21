@@ -2,8 +2,8 @@
 
 
 .PHONY: run-demo
-run-demo: venv ## Run demo
-	./venv/bin/python3 agent-1.py
+run-demo: ## Run demo
+	make -C py run-demo
 
 .PHONY: deps
 deps: ## Install dependencies
@@ -19,16 +19,3 @@ download-samples: deps ## Download samples
 run-sample-flow: download-samples ## Run sample flow
 	@./scripts/run-sample-flow.sh
 
-venv: requirements.in ## Create virtual environment
-	@python3 -m venv venv
-	./venv/bin/pip install wheel pip-tools
-	./venv/bin/pip-compile requirements.in
-	./venv/bin/pip-sync
-
-.PHONY: run
-run:
-	@python generate_maestro_yaml.py
-
-.PHONY: clean
-clean:
-	@rm -rf ./output/run*
