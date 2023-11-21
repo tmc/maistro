@@ -25,3 +25,10 @@ venv: requirements.in ## Create virtual environment
 	./venv/bin/pip-compile requirements.in
 	./venv/bin/pip-sync
 
+.PHONY: run
+run:
+	@python generate_maestro_yaml.py
+
+.PHONY: clean
+clean:
+	@rm -rf ./output/run*

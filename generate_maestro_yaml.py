@@ -14,7 +14,7 @@ INPUT_TASKS = [
     "Tap on the 'Search' tab at the bottom right corner",
     "Tap on the 'Search Wikipedia' bar at the top",
     "Type 'Mission Dolores Park'",
-    "Tap on the 'Mission Dolores Park' item in the search results",
+    "Tap on the 'Mission Dolores Park' item in the search result list",
     "Tap on the 'Save' icon, usually a star or bookmark symbol, to add to saved places",
     "Tap on the 'Places' tab at the bottom to go to saved places",
     "Verify that 'Mission Dolores Park' is listed under saved places",
@@ -31,6 +31,7 @@ def extract_last_triple_backticks(text):
 def take_new_screenshot() -> str:
     # take screenshot of ios emulator:
     # xcrun simctl io booted screenshot --type=png last-screen.png
+    # save last screen to last-screen.png 
     os.system("xcrun simctl io booted screenshot --type=png last-screen.png")
     return get_script_cwd("last-screen.png")
 
@@ -186,7 +187,7 @@ if __name__ == "__main__":
             with open(base_test_file_path, "a") as f:  # Open in append mode
                 result = convert_instruction_to_maestro_yaml_fragment(
                     task, context, screenshot_path=screenshot_path)
-                new_instruction = result["output_yaml"]
+                new_instruction = result["output_yaml"]  or ''
                 # Append the new instruction
                 f.write("\n" + new_instruction)
 
@@ -221,3 +222,4 @@ if __name__ == "__main__":
         # Check if all attempts failed
         if test_result["status"] != "TEST_SUCCEEDED":
             print(f"All retry attempts failed for task {index + 1}")
+
